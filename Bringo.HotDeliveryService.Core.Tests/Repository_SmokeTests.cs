@@ -7,15 +7,14 @@ namespace Bringo.HotDeliveryService.Core.Tests
 {
     public class Repository_SmokeTests
     {
+        public IRepository Repo { get; set; }
+
         [SetUp]
         public void SetUp()
         {
-            //Repo = new FileRepository();
-            Repo = new JsonRepository();
-            //Repo = new SqliteRepository();
+            //Repo = DiRoot.Resolve<SqliteRepository>();
+            Repo = DiRoot.Resolve<JsonRepository>();
         }
-
-        public IRepository Repo { get; set; }
 
         [Test]
         public async Task Add()

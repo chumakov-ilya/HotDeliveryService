@@ -84,9 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DiRoot.cs" />
-    <Compile Include="Configs\IAppSettings.cs" />
     <Compile Include="Configs\RandomDeliveryPolicy.cs" />
     <Compile Include="Jobs\CreateJob.cs" />
+    <Compile Include="Jobs\IJob.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Jobs\ExpireJob.cs" />

@@ -4,16 +4,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Biggy.Core;
 using Biggy.Data.Json;
+using Bringo.HotDeliveryService.Core.Configs;
 
 namespace Bringo.HotDeliveryService.Core
 {
     public class JsonRepository : IRepository
     {
+        public IAppSettings Settings { get; set; }
+
+        public JsonRepository(IAppSettings settings)
+        {
+            Settings = settings;
+        }
+
         public BiggyList<Delivery> GetList()
         {
-            var store = new JsonStore<Delivery>("X:\\", "Bringo", "Delivery.json");
-            var list = new BiggyList<Delivery>(store);
-            return list;
+            var store = new JsonStore<Delivery>(Settings.StoragePath, "", nameof(Delivery));
+
+            return new BiggyList<Delivery>(store);
         }
 
         public async Task ClearAll()
@@ -53,8 +61,7 @@ namespace Bringo.HotDeliveryService.Core
             {
                 var list = GetList();
 
-                var expired = list.Where(d =>
-                        d.Status == DeliveryStatusEnum.Available && d.CreationTime < expirationTime).ToList();
+                var expired = list.Where(d => d.IsExpired(expirationTime)).ToList();
 
                 expired.ForEach(d => d.Status = DeliveryStatusEnum.Expired);
 

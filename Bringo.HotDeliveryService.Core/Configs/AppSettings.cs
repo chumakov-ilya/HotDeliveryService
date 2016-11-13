@@ -17,10 +17,7 @@ namespace Bringo.HotDeliveryService.Core.Configs
         int TaskIntervalMin { get; set; }
 
         StorageType StorageType { get; set; }
-
-        //string PathToJsonFile { get; set; }
-
-        //IAppSettings ReadFromFile();
+        string StoragePath { get; set; }
     }
 
     public class AppSettings : AppConfiguration, IAppSettings
@@ -32,8 +29,7 @@ namespace Bringo.HotDeliveryService.Core.Configs
         public int ExpirationTime { get; set; }
 
         public StorageType StorageType { get; set; }
-
-        public string PathToJsonFile { get; set; }
+        public string StoragePath { get; set; }
 
         protected override IConfigurationProvider OnCreateDefaultProvider(string sectionName, object configData)
         {
@@ -44,11 +40,5 @@ namespace Bringo.HotDeliveryService.Core.Configs
 
             return provider;
         }
-
-        //public IAppSettings ReadFromFile()
-        //{
-        //    this.Initialize();
-        //    return this;
-        //}
     }
 }

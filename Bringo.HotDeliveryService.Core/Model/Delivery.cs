@@ -15,5 +15,10 @@ namespace Bringo.HotDeliveryService.Core
         public int UserId { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime ModificationTime { get; set; }
+
+        public bool IsExpired(DateTime expirationTime)
+        {
+            return Status == DeliveryStatusEnum.Available && CreationTime < expirationTime;
+        }
     }
 }

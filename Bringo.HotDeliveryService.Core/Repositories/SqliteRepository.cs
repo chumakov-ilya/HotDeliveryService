@@ -2,17 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bringo.HotDeliveryService.Core.Configs;
 using SQLite;
 
 namespace Bringo.HotDeliveryService.Core
 {
     public class SqliteRepository : IRepository
     {
-        private string _filename = "X:\\Delivery.db";
+        public IAppSettings Settings { get; set; }
+
+        public SqliteRepository(IAppSettings settings)
+        {
+            Settings = settings;
+        }
+
+        private SQLiteAsyncConnection CreateConnection()
+        {
+            string path = Settings.StoragePath + "Delivery.sqlite";
+
+            return new SQLiteAsyncConnection(path);
+        }
 
         public async Task Save(List<Delivery> deliveries)
         {
-            var db = new SQLiteAsyncConnection(_filename);
+            var db = CreateConnection();
 
             await db.UpdateAllAsync(deliveries.Where(d => d.Id > 0));
 
@@ -21,7 +34,7 @@ namespace Bringo.HotDeliveryService.Core
 
         public async Task<List<Delivery>> ReadAll()
         {
-            var db = new SQLiteAsyncConnection(_filename);
+            var db = CreateConnection();
 
             var list = await db.Table<Delivery>().ToListAsync();
 
@@ -30,7 +43,7 @@ namespace Bringo.HotDeliveryService.Core
 
         public async Task UpdateExpired(DateTime expirationTime)
         {
-            var db = new SQLiteAsyncConnection(_filename);
+            var db = CreateConnection();
 
             await db.ExecuteAsync(
                 "UPDATE Delivery SET Status = 3 WHERE Status = 1 AND CreationTime <= @expTime", 
@@ -39,7 +52,7 @@ namespace Bringo.HotDeliveryService.Core
 
         public async Task ClearAll()
         {
-            var db = new SQLiteAsyncConnection(_filename);
+            var db = CreateConnection();
 
             await db.ExecuteAsync($"DELETE FROM {nameof(Delivery)}");
         }
