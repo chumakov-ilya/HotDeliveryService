@@ -11,12 +11,10 @@ using Ninject;
 
 namespace Bringo.HotDeliveryService.Web.Controllers
 {
-    public class ValuesController : ApiController
+    public class DeliveriesController : ApiController
     {
         [Inject]
         public IRepository Repository { get; set; }
-        [Inject]
-        public IAppSettings Settings { get; set; }
 
         public async Task<IHttpActionResult> Get([FromUri]Filter filter)
         {
@@ -29,19 +27,10 @@ namespace Bringo.HotDeliveryService.Web.Controllers
             return Content(HttpStatusCode.BadRequest, new Error { ErrorText = $"incorrect child resource." });
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
+        [Route("~/api/deliveries/{deliveryId}/actions/take")]
+        public void Post([FromUri]int deliveryId, [FromBody]TakeRequestBody body)
         {
-        }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
         }
     }
 }
