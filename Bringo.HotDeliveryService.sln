@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bringo.HotDeliveryService.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bringo.HotDeliveryService.Core.Tests", "Bringo.HotDeliveryService.Core.Tests\Bringo.HotDeliveryService.Core.Tests.csproj", "{D6F6466C-3C4A-4842-967F-3F5F46664D86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bringo.HotDeliveryService.Web", "Bringo.HotDeliveryService.Web\Bringo.HotDeliveryService.Web.csproj", "{653983CC-B095-4974-B9D0-8C4F086B70BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D6F6466C-3C4A-4842-967F-3F5F46664D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6F6466C-3C4A-4842-967F-3F5F46664D86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6F6466C-3C4A-4842-967F-3F5F46664D86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{653983CC-B095-4974-B9D0-8C4F086B70BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{653983CC-B095-4974-B9D0-8C4F086B70BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{653983CC-B095-4974-B9D0-8C4F086B70BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{653983CC-B095-4974-B9D0-8C4F086B70BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

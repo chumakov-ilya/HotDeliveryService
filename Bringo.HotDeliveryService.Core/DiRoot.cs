@@ -1,6 +1,7 @@
 ﻿using Bringo.HotDeliveryService.Core.Configs;
 using Ninject;
 using Ninject.Syntax;
+using Ninject.Web.Common;
 
 namespace Bringo.HotDeliveryService.Core
 {
@@ -13,7 +14,12 @@ namespace Bringo.HotDeliveryService.Core
 
         public static void Register()
         {
-            Kernel = new StandardKernel();
+            Register(new StandardKernel());
+        }
+
+        public static void Register(StandardKernel kernel)
+        {
+            Kernel = kernel;
 
             Kernel.Settings.InjectNonPublic = true;
 
@@ -35,7 +41,8 @@ namespace Bringo.HotDeliveryService.Core
 
         internal static IBindingNamedWithOrOnSyntax<TTo> Bind<TFrom, TTo>() where TTo : TFrom
         {
-            return Kernel.Bind<TFrom>().To<TTo>().InTransientScope();
+            return Kernel.Bind<TFrom>().To<TTo>().InRequestScope();
+            //return Kernel.Bind<TFrom>().To<TTo>().InTransientScope();
         }
 
         public static IKernel Kernel { get; set; }
