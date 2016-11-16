@@ -32,22 +32,27 @@ namespace Bringo.HotDeliveryService.Core
             await db.InsertAllAsync(deliveries.Where(d => d.Id == 0));
         }
 
-        public async Task<List<Delivery>> ReadAll()
+        public async Task<List<Delivery>> GetAll()
         {
             var db = CreateConnection();
 
-            var list = await db.Table<Delivery>().ToListAsync();
-
-            return list;
+            return await db.Table<Delivery>().ToListAsync();
         }
 
-        public async Task UpdateExpired(DateTime expirationTime)
+        public async Task MarkAsExpired(DateTime expirationTime)
         {
             var db = CreateConnection();
 
             await db.ExecuteAsync(
-                "UPDATE Delivery SET Status = 3 WHERE Status = 1 AND CreationTime <= @expTime", 
+                "UPDATE Delivery SET Status = 3 WHERE Status = 1 AND CreationTime <= @expTime",
                 expirationTime);
+        }
+
+        public async Task<Delivery> GetById(int deliveryId)
+        {
+            var db = CreateConnection();
+
+            return await db.Table<Delivery>().Where(d => d.Id == deliveryId).FirstOrDefaultAsync();
         }
 
         public async Task ClearAll()

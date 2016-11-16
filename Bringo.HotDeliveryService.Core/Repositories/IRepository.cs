@@ -10,8 +10,10 @@ namespace Bringo.HotDeliveryService.Core
 
         Task Save(List<Delivery> deliveries);
 
-        Task<List<Delivery>> ReadAll();
+        Task<List<Delivery>> GetAll();
 
-        Task UpdateExpired(DateTime expirationTime);
+        Task MarkAsExpired(DateTime expirationTime);
+
+        Task<Delivery> GetById(int deliveryId);
     }
 }

@@ -18,7 +18,7 @@ namespace Bringo.HotDeliveryService.Core
 
         public async Task Save(List<Delivery> deliveries)
         {
-            var oldRecords = await ReadAll();
+            var oldRecords = await GetAll();
 
             var newIds = deliveries.Select(d => d.Id);
 
@@ -46,7 +46,7 @@ namespace Bringo.HotDeliveryService.Core
             }
         }
 
-        public async Task<List<Delivery>> ReadAll()
+        public async Task<List<Delivery>> GetAll()
         {
             using (StreamReader reader = new StreamReader(_path))
             {
@@ -56,7 +56,12 @@ namespace Bringo.HotDeliveryService.Core
             }
         }
 
-        public Task UpdateExpired(DateTime expirationTime)
+        public Task MarkAsExpired(DateTime expirationTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Delivery> GetById(int deliveryId)
         {
             throw new NotImplementedException();
         }

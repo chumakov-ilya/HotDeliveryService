@@ -26,12 +26,12 @@ namespace Bringo.HotDeliveryService.Core
 
         public async Task ClearAll()
         {
-            await Task.Run(() => GetList().Clear());
+            await Task.Run(() => GetList().Clear()).ConfigureAwait(false);
         }
 
-        public async Task<List<Delivery>> ReadAll()
+        public async Task<List<Delivery>> GetAll()
         {
-            return await Task.Run(() => GetList().ToList());
+            return await Task.Run(() => GetList().ToList()).ConfigureAwait(false);
         }
 
         public async Task Save(List<Delivery> deliveries)
@@ -52,21 +52,26 @@ namespace Bringo.HotDeliveryService.Core
                         list.Update(delivery);
                     }
                 }
-            });
+            }).ConfigureAwait(false); ;
         }
 
-        public async Task UpdateExpired(DateTime expirationTime)
+        public async Task MarkAsExpired(DateTime expirationTime)
         {
             await Task.Run(() =>
             {
                 var list = GetList();
 
-                var expired = list.Where(d => d.IsExpired(expirationTime)).ToList();
+                var expired = list.Where(d => d.IsExpiredByTime(expirationTime)).ToList();
 
                 expired.ForEach(d => d.Status = DeliveryStatusEnum.Expired);
 
                 list.Update(expired);
-            });
+            }).ConfigureAwait(false);
+        }
+
+        public async Task<Delivery> GetById(int deliveryId)
+        {
+            return await Task.Run(() => GetList().FirstOrDefault(d => d.Id == deliveryId)).ConfigureAwait(false);
         }
     }
 }

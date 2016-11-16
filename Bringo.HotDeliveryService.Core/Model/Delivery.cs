@@ -16,7 +16,7 @@ namespace Bringo.HotDeliveryService.Core
         public DateTime CreationTime { get; set; }
         public DateTime ModificationTime { get; set; }
 
-        public bool IsExpired(DateTime expirationTime)
+        public bool IsExpiredByTime(DateTime expirationTime)
         {
             return Status == DeliveryStatusEnum.Available && CreationTime < expirationTime;
         }
