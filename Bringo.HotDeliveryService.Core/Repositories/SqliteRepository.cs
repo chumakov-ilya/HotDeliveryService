@@ -32,11 +32,15 @@ namespace Bringo.HotDeliveryService.Core
             await db.InsertAllAsync(deliveries.Where(d => d.Id == 0));
         }
 
-        public async Task<List<Delivery>> GetAll()
+        public async Task<List<Delivery>> GetAll(Filter filter = null)
         {
             var db = CreateConnection();
 
-            return await db.Table<Delivery>().ToListAsync();
+            var query = db.Table<Delivery>();
+
+            if (filter != null) query = query.Where(d => d.Status == filter.Status);
+
+            return await query.ToListAsync();
         }
 
         public async Task MarkAsExpired(DateTime expirationTime)

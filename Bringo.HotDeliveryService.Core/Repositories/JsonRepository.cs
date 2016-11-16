@@ -29,9 +29,9 @@ namespace Bringo.HotDeliveryService.Core
             await Task.Run(() => GetList().Clear()).ConfigureAwait(false);
         }
 
-        public async Task<List<Delivery>> GetAll()
+        public async Task<List<Delivery>> GetAll(Filter filter = null)
         {
-            return await Task.Run(() => GetList().ToList()).ConfigureAwait(false);
+            return await Task.Run(() => GetList().Where(d => filter == null || d.Status == filter.Status).ToList()).ConfigureAwait(false);
         }
 
         public async Task Save(List<Delivery> deliveries)

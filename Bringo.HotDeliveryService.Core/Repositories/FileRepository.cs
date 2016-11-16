@@ -46,7 +46,7 @@ namespace Bringo.HotDeliveryService.Core
             }
         }
 
-        public async Task<List<Delivery>> GetAll()
+        public async Task<List<Delivery>> GetAll(Filter filter = null)
         {
             using (StreamReader reader = new StreamReader(_path))
             {

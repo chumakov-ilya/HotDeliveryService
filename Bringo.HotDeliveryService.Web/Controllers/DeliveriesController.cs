@@ -20,7 +20,7 @@ namespace Bringo.HotDeliveryService.Web.Controllers
         {
             //if (id <=0) return Content(HttpStatusCode.BadRequest, new Error { ErrorText = $"empty subscription id." });
 
-            var deliveries = await Repository.GetAll();
+            var deliveries = await Repository.GetAll(filter);
 
             return Content(HttpStatusCode.OK, deliveries.ToArray());
 
@@ -30,6 +30,7 @@ namespace Bringo.HotDeliveryService.Web.Controllers
         [Route("~/api/deliveries/{deliveryId}/actions/take")]
         public async Task<IHttpActionResult> Post([FromUri]int deliveryId, [FromBody]TakeRequestBody body)
         {
+            //TODO: lock
             Delivery delivery = await Repository.GetById(deliveryId);
 
             if (delivery == null)
@@ -40,9 +41,9 @@ namespace Bringo.HotDeliveryService.Web.Controllers
 
             delivery.Status = DeliveryStatusEnum.Taken;
 
+            //Repository.Update(delivery);
 
             return Content(HttpStatusCode.OK, new Error { ErrorText = $"OK" });
-            //Repository.Update(delivery);
         }
     }
 }

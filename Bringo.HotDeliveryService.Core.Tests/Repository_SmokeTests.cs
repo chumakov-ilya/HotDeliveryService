@@ -12,8 +12,8 @@ namespace Bringo.HotDeliveryService.Core.Tests
         [SetUp]
         public void SetUp()
         {
-            Repo = DiRoot.Resolve<SqliteRepository>();
-            //Repo = DiRoot.Resolve<JsonRepository>();
+            //Repo = DiRoot.Resolve<SqliteRepository>();
+            Repo = DiRoot.Resolve<JsonRepository>();
         }
 
         [Test]
@@ -68,9 +68,9 @@ namespace Bringo.HotDeliveryService.Core.Tests
         }
 
         [Test]
-        public async Task ReadAll()
+        public async Task GetAll()
         {
-            var deliveries = await Repo.GetAll();
+            var deliveries = await Repo.GetAll(new Filter() {Status = DeliveryStatusEnum.Taken});
 
             Console.WriteLine(deliveries.Serialize());
         }
