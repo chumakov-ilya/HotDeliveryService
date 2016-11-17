@@ -104,7 +104,6 @@
     <Compile Include="Jobs\IJob.cs" />
     <Compile Include="Model\Error.cs" />
     <Compile Include="Model\Filter.cs" />
-    <Compile Include="Model\TakeRequestBody.cs" />
     <Compile Include="Services\DeliveryService.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Jobs\ExpireJob.cs" />

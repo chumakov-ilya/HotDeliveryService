@@ -1,21 +1,26 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Bringo.HotDeliveryService.Core
 {
     public class Scheduler
     {
+        public RandomDeliveryPolicy Policy { get; set; }
+
+        public CancellationToken CancellationToken { get; set; }
+
         public Scheduler(RandomDeliveryPolicy policy)
         {
             Policy = policy;
         }
 
-        public RandomDeliveryPolicy Policy { get; set; }
-
-        public void InfiniteRunAsync(params IJob[] jobs)
+        public void Run(CancellationToken cancellationToken, params IJob[] jobs)
         {
+            CancellationToken = cancellationToken;
+
             var tasks = jobs.Select(InfiniteRunAsync).ToArray();
 
             Task.WaitAll(tasks);
@@ -23,10 +28,9 @@ namespace Bringo.HotDeliveryService.Core
 
         public async Task InfiniteRunAsync(IJob job)
         {
-            //TODO: cancellation
             while (true)
             {
-                await Task.Delay(TimeSpan.FromSeconds(Policy.GetDelay())).ConfigureAwait(false);
+                await Task.Delay(TimeSpan.FromSeconds(Policy.GetDelay()), CancellationToken).ConfigureAwait(false);
 
                 Trace.WriteLine($"Job {job.GetType().Name} is called");
 

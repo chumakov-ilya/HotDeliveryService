@@ -16,6 +16,11 @@ namespace Bringo.HotDeliveryService.Web.Controllers
         [Inject]
         public DeliveryService Service { get; set; }
 
+        /// <summary>
+        /// Get all deliveries by status (Available, Expired, Taken).
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public async Task<IHttpActionResult> Get([FromUri]Filter filter)
         {
             //if (id <=0) return Content(HttpStatusCode.BadRequest, new Error { ErrorText = $"empty subscription id." });
@@ -25,6 +30,12 @@ namespace Bringo.HotDeliveryService.Web.Controllers
             return Content(HttpStatusCode.OK, deliveries.ToArray());
         }
 
+        /// <summary>
+        /// Take a delivery by ID.
+        /// </summary>
+        /// <param name="deliveryId"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
         [Route("~/api/deliveries/{deliveryId}/actions/take")]
         public async Task<IHttpActionResult> Post([FromUri]int deliveryId, [FromBody]TakeRequestBody body)
         {
