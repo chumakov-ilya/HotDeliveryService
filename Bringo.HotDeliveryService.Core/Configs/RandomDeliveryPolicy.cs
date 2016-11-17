@@ -1,6 +1,6 @@
 using System;
 
-namespace Bringo.HotDeliveryService.Core.Configs
+namespace Bringo.HotDeliveryService.Core
 {
     public class RandomDeliveryPolicy
     {

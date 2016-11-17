@@ -8,9 +8,11 @@ namespace Bringo.HotDeliveryService.Core
     {
         Task ClearAll();
 
-        Task Save(List<Delivery> deliveries);
+        Task Save(Delivery delivery);
 
-        Task<List<Delivery>> GetAll(Filter filter = null);
+        Task Save(ICollection<Delivery> deliveries);
+
+        Task<List<Delivery>> Get(Filter filter = null);
 
         Task MarkAsExpired(DateTime expirationTime);
 

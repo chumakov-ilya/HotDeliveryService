@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Bringo.HotDeliveryService.Core.Configs;
 
 namespace Bringo.HotDeliveryService.Core
 {

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Biggy.Core;
 using Biggy.Data.Json;
-using Bringo.HotDeliveryService.Core.Configs;
 
 namespace Bringo.HotDeliveryService.Core
 {
@@ -17,7 +16,7 @@ namespace Bringo.HotDeliveryService.Core
             Settings = settings;
         }
 
-        public BiggyList<Delivery> GetList()
+        private BiggyList<Delivery> GetList()
         {
             var store = new JsonStore<Delivery>(Settings.StoragePath, "", nameof(Delivery));
 
@@ -29,12 +28,17 @@ namespace Bringo.HotDeliveryService.Core
             await Task.Run(() => GetList().Clear()).ConfigureAwait(false);
         }
 
-        public async Task<List<Delivery>> GetAll(Filter filter = null)
+        public async Task Save(Delivery delivery)
+        {
+            await Save(new [] {delivery});
+        }
+
+        public async Task<List<Delivery>> Get(Filter filter = null)
         {
             return await Task.Run(() => GetList().Where(d => filter == null || d.Status == filter.Status).ToList()).ConfigureAwait(false);
         }
 
-        public async Task Save(List<Delivery> deliveries)
+        public async Task Save(ICollection<Delivery> deliveries)
         {
             await Task.Run(() =>
             {
@@ -52,7 +56,7 @@ namespace Bringo.HotDeliveryService.Core
                         list.Update(delivery);
                     }
                 }
-            }).ConfigureAwait(false); ;
+            }).ConfigureAwait(false);
         }
 
         public async Task MarkAsExpired(DateTime expirationTime)

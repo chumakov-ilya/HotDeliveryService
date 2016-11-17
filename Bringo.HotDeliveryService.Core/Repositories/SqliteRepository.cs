@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Bringo.HotDeliveryService.Core.Configs;
 using SQLite;
 
 namespace Bringo.HotDeliveryService.Core
@@ -23,7 +22,12 @@ namespace Bringo.HotDeliveryService.Core
             return new SQLiteAsyncConnection(path);
         }
 
-        public async Task Save(List<Delivery> deliveries)
+        public async Task Save(Delivery delivery)
+        {
+            await Save(new[] { delivery });
+        }
+
+        public async Task Save(ICollection<Delivery> deliveries)
         {
             var db = CreateConnection();
 
@@ -32,7 +36,7 @@ namespace Bringo.HotDeliveryService.Core
             await db.InsertAllAsync(deliveries.Where(d => d.Id == 0));
         }
 
-        public async Task<List<Delivery>> GetAll(Filter filter = null)
+        public async Task<List<Delivery>> Get(Filter filter = null)
         {
             var db = CreateConnection();
 

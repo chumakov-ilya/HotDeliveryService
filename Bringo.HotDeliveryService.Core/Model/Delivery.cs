@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
 using SQLite;
 
 namespace Bringo.HotDeliveryService.Core
@@ -19,6 +17,11 @@ namespace Bringo.HotDeliveryService.Core
         public bool IsExpiredByTime(DateTime expirationTime)
         {
             return Status == DeliveryStatusEnum.Available && CreationTime < expirationTime;
+        }
+
+        public bool IsExpired()
+        {
+            return Status == DeliveryStatusEnum.Expired || IsExpiredByTime(DateTime.Now);
         }
     }
 }

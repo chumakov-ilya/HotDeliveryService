@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Bringo.HotDeliveryService.Core.Configs;
 
 namespace Bringo.HotDeliveryService.Core
 {
@@ -9,11 +8,11 @@ namespace Bringo.HotDeliveryService.Core
     {
         public TimeSpan ExpirationInterval { get; set; }
 
-        public IRepository Repository { get; set; }
+        public DeliveryService Service { get; set; }
 
-        public ExpireJob(IRepository repository, IAppSettings settings)
+        public ExpireJob(DeliveryService service, IAppSettings settings)
         {
-            Repository = repository;
+            Service = service;
             ExpirationInterval = TimeSpan.FromSeconds(settings.ExpirationTime);
         }
 
@@ -21,7 +20,7 @@ namespace Bringo.HotDeliveryService.Core
         {
             var expirationTime = DateTime.Now - ExpirationInterval;
 
-            await Repository.MarkAsExpired(expirationTime);
+            await Service.MarkAsExpired(expirationTime);
         }
     }
 }

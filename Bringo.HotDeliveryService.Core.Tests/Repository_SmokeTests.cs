@@ -10,10 +10,12 @@ namespace Bringo.HotDeliveryService.Core.Tests
         public IRepository Repo { get; set; }
 
         [SetUp]
-        public void SetUp()
+        public async Task SetUp()
         {
             //Repo = DiRoot.Resolve<SqliteRepository>();
             Repo = DiRoot.Resolve<JsonRepository>();
+
+            await Repo.ClearAll();
         }
 
         [Test]
@@ -21,7 +23,7 @@ namespace Bringo.HotDeliveryService.Core.Tests
         {
             await Add();
 
-            var fromDb = await Repo.GetAll();
+            var fromDb = await Repo.Get();
 
             var delivery = await Repo.GetById(fromDb.Select(d => d.Id).First());
 
@@ -37,7 +39,7 @@ namespace Bringo.HotDeliveryService.Core.Tests
 
             await Repo.Save(toDb.ToList());
 
-            var fromDb = await Repo.GetAll();
+            var fromDb = await Repo.Get();
 
             Assert.IsTrue(fromDb.Any(d => d.Id == delivery.Id));
         }
@@ -45,14 +47,14 @@ namespace Bringo.HotDeliveryService.Core.Tests
         [Test]
         public async Task Update()
         {
-            var fromDb = await Repo.GetAll();
+            var fromDb = await Repo.Get();
 
             var delivery = fromDb.LastOrDefault();
 
             if (delivery == null)
             {
                 await Add();
-                fromDb = await Repo.GetAll();
+                fromDb = await Repo.Get();
                 delivery = fromDb.Last();
             }
 
@@ -62,7 +64,7 @@ namespace Bringo.HotDeliveryService.Core.Tests
 
             await Repo.Save(toDb.ToList());
 
-            fromDb = await Repo.GetAll();
+            fromDb = await Repo.Get();
 
             Assert.IsTrue(fromDb.First(d => d.Id == delivery.Id).Title == delivery.Title);
         }
@@ -70,7 +72,7 @@ namespace Bringo.HotDeliveryService.Core.Tests
         [Test]
         public async Task GetAll()
         {
-            var deliveries = await Repo.GetAll(new Filter() {Status = DeliveryStatusEnum.Taken});
+            var deliveries = await Repo.Get(new Filter() {Status = DeliveryStatusEnum.Taken});
 
             Console.WriteLine(deliveries.Serialize());
         }
@@ -80,7 +82,7 @@ namespace Bringo.HotDeliveryService.Core.Tests
         {
             await Repo.ClearAll();
 
-            var deliveries = await Repo.GetAll();
+            var deliveries = await Repo.Get();
 
             Assert.IsEmpty(deliveries);
         }

@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Bringo.HotDeliveryService.Core.Configs;
+using System.Web.Http.Results;
 using Ninject;
 
 namespace Bringo.HotDeliveryService.Web.Controllers
@@ -14,36 +14,37 @@ namespace Bringo.HotDeliveryService.Web.Controllers
     public class DeliveriesController : ApiController
     {
         [Inject]
-        public IRepository Repository { get; set; }
+        public DeliveryService Service { get; set; }
 
         public async Task<IHttpActionResult> Get([FromUri]Filter filter)
         {
             //if (id <=0) return Content(HttpStatusCode.BadRequest, new Error { ErrorText = $"empty subscription id." });
 
-            var deliveries = await Repository.GetAll(filter);
+            var deliveries = await Service.Get(filter);
 
             return Content(HttpStatusCode.OK, deliveries.ToArray());
-
-            return Content(HttpStatusCode.BadRequest, new Error { ErrorText = $"incorrect child resource." });
         }
 
         [Route("~/api/deliveries/{deliveryId}/actions/take")]
         public async Task<IHttpActionResult> Post([FromUri]int deliveryId, [FromBody]TakeRequestBody body)
         {
-            //TODO: lock
-            Delivery delivery = await Repository.GetById(deliveryId);
+            Delivery delivery = await Service.Take(deliveryId);
 
-            if (delivery == null)
-                return Content(HttpStatusCode.NotFound, new Error { ErrorText = $"Delivery #{deliveryId} not found." });
+            if (delivery == null) return NotFound(deliveryId);
 
-            if (delivery.Status == DeliveryStatusEnum.Expired || delivery.IsExpiredByTime(DateTime.Now))
-                return Content((HttpStatusCode)422, new Error { ErrorText = $"Delivery #{deliveryId} is expired." });
+            if (delivery.IsExpired()) return IsExpired(deliveryId);
 
-            delivery.Status = DeliveryStatusEnum.Taken;
+            return Content(HttpStatusCode.OK, delivery);
+        }
 
-            //Repository.Update(delivery);
+        private NegotiatedContentResult<Error> NotFound(int deliveryId)
+        {
+            return Content(HttpStatusCode.NotFound, new Error { ErrorText = $"Delivery #{deliveryId} is not found." });
+        }
 
-            return Content(HttpStatusCode.OK, new Error { ErrorText = $"OK" });
+        private NegotiatedContentResult<Error> IsExpired(int deliveryId)
+        {
+            return Content((HttpStatusCode)422, new Error { ErrorText = $"Delivery #{deliveryId} is expired." });
         }
     }
 }

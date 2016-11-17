@@ -1,5 +1,4 @@
-﻿using Bringo.HotDeliveryService.Core.Configs;
-using Ninject;
+﻿using Ninject;
 using Ninject.Syntax;
 using Ninject.Web.Common;
 
@@ -21,17 +20,17 @@ namespace Bringo.HotDeliveryService.Core
         {
             Kernel = kernel;
 
-            Kernel.Settings.InjectNonPublic = true;
-
             var appSettings = new AppSettings();
             appSettings.Initialize();
-
             Kernel.Bind<IAppSettings>().ToConstant(appSettings).InSingletonScope();
 
             if (appSettings.StorageType == StorageType.Json)
                 Bind<IRepository, JsonRepository>();
             if (appSettings.StorageType == StorageType.Sqlite)
                 Bind<IRepository, SqliteRepository>();
+
+            BindToSelf<DeliveryFactory>();
+            BindToSelf<DeliveryService>();
         }
 
         internal static IBindingNamedWithOrOnSyntax<TFrom> BindToSelf<TFrom>()
