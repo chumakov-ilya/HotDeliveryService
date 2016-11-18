@@ -1,4 +1,8 @@
-﻿using Westwind.Utilities.Configuration;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using Westwind.Utilities.Configuration;
 
 namespace Bringo.HotDeliveryService.Core
 {
@@ -11,7 +15,20 @@ namespace Bringo.HotDeliveryService.Core
         public int ExpirationTime { get; set; }
 
         public StorageType StorageType { get; set; }
-        public string StoragePath { get; set; }
+
+        public string GetStoragePath()
+        {
+            string assemblyDir = AssemblyDirectory;
+
+            //GetParent() is needed to avoid writings to \bin folder (overwise it causes IIS pool recycle).
+            string parent = Directory.GetParent(assemblyDir).FullName;
+
+            string storagePath = Path.Combine(parent, "Storage\\");
+
+            Trace.WriteLine("Current dir: " + storagePath);
+
+            return storagePath;
+        }
 
         protected override IConfigurationProvider OnCreateDefaultProvider(string sectionName, object configData)
         {
@@ -21,6 +38,17 @@ namespace Bringo.HotDeliveryService.Core
             };
 
             return provider;
+        }
+
+        private string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
         }
     }
 }

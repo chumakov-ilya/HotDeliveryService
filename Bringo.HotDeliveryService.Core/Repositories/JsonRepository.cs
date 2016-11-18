@@ -18,7 +18,7 @@ namespace Bringo.HotDeliveryService.Core
 
         private BiggyList<Delivery> GetList()
         {
-            var store = new JsonStore<Delivery>(Settings.StoragePath, "", nameof(Delivery));
+            var store = new JsonStore<Delivery>(Settings.GetStoragePath(), "", nameof(Delivery));
 
             return new BiggyList<Delivery>(store);
         }

@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using System;
+using Ninject;
 using Ninject.Syntax;
 using Ninject.Web.Common;
 
@@ -49,6 +50,11 @@ namespace Bringo.HotDeliveryService.Core
         public static T Resolve<T>()
         {
             return (T)Kernel.GetService(typeof(T));
+        }
+
+        public static object Resolve(Type type)
+        {
+            return Kernel.GetService(type);
         }
     }
 }

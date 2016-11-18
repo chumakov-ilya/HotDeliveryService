@@ -9,6 +9,7 @@
         int TaskIntervalMin { get; set; }
 
         StorageType StorageType { get; set; }
-        string StoragePath { get; set; }
+
+        string GetStoragePath();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using SQLite;
@@ -17,7 +18,7 @@ namespace Bringo.HotDeliveryService.Core
 
         private SQLiteAsyncConnection CreateConnection()
         {
-            string path = Settings.StoragePath + "Delivery.sqlite";
+            string path = Path.Combine(Settings.GetStoragePath(), "Delivery.sqlite");
 
             return new SQLiteAsyncConnection(path);
         }
