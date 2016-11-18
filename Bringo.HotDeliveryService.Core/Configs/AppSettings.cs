@@ -25,8 +25,6 @@ namespace Bringo.HotDeliveryService.Core
 
             string storagePath = Path.Combine(parent, "Storage\\");
 
-            Trace.WriteLine("Current dir: " + storagePath);
-
             return storagePath;
         }
 

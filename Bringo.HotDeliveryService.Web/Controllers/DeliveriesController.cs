@@ -24,11 +24,9 @@ namespace Bringo.HotDeliveryService.Web.Controllers
         /// <returns></returns>
         public async Task<IHttpActionResult> Get([FromUri]Filter filter)
         {
-            //if (id <=0) return Content(HttpStatusCode.BadRequest, new Error { ErrorText = $"empty subscription id." });
-
             var deliveries = await Service.GetAsync(filter);
 
-            return Content(HttpStatusCode.OK, deliveries.ToArray());
+            return Ok(deliveries.ToArray());
         }
 
         /// <summary>
@@ -37,7 +35,7 @@ namespace Bringo.HotDeliveryService.Web.Controllers
         /// <param name="deliveryId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [Route("~/api/deliveries/{deliveryId}/actions/take")]
+        [Route("~/api/Deliveries/{deliveryId}/actions/take")]
         public async Task<IHttpActionResult> Put([FromUri]int deliveryId, [FromUri]int userId)
         {
             Delivery delivery = await Service.TakeAsync(deliveryId);
@@ -46,7 +44,7 @@ namespace Bringo.HotDeliveryService.Web.Controllers
 
             if (delivery.IsExpired()) return IsExpired(deliveryId);
 
-            return Content(HttpStatusCode.OK, delivery);
+            return Ok(delivery);
         }
 
         private NegotiatedContentResult<Error> NotFound(int deliveryId)
