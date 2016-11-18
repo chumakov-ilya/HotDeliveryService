@@ -23,22 +23,22 @@ namespace Bringo.HotDeliveryService.Core
             return new BiggyList<Delivery>(store);
         }
 
-        public async Task ClearAll()
+        public async Task ClearAllAsync()
         {
             await Task.Run(() => GetList().Clear()).ConfigureAwait(false);
         }
 
-        public async Task Save(Delivery delivery)
+        public async Task SaveAsync(Delivery delivery)
         {
-            await Save(new [] {delivery});
+            await SaveAsync(new [] {delivery});
         }
 
-        public async Task<List<Delivery>> Get(Filter filter = null)
+        public async Task<List<Delivery>> GetAsync(Filter filter = null)
         {
             return await Task.Run(() => GetList().Where(d => filter == null || d.Status == filter.Status).ToList()).ConfigureAwait(false);
         }
 
-        public async Task Save(ICollection<Delivery> deliveries)
+        public async Task SaveAsync(ICollection<Delivery> deliveries)
         {
             await Task.Run(() =>
             {
@@ -61,7 +61,7 @@ namespace Bringo.HotDeliveryService.Core
             }).ConfigureAwait(false);
         }
 
-        public async Task MarkAsExpired(DateTime expirationTime)
+        public async Task MarkAsExpiredAsync(DateTime expirationTime)
         {
             await Task.Run(() =>
             {
@@ -76,7 +76,7 @@ namespace Bringo.HotDeliveryService.Core
             }).ConfigureAwait(false);
         }
 
-        public async Task<Delivery> GetById(int deliveryId)
+        public async Task<Delivery> GetByIdAsync(int deliveryId)
         {
             return await Task.Run(() => GetList().FirstOrDefault(d => d.Id == deliveryId)).ConfigureAwait(false);
         }

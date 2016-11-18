@@ -21,12 +21,12 @@ namespace Bringo.HotDeliveryService.Core
         {
             CancellationToken = cancellationToken;
 
-            var tasks = jobs.Select(InfiniteRunAsync).ToArray();
+            var tasks = jobs.Select(RunJobAsync).ToArray();
 
             Task.WaitAll(tasks);
         }
 
-        public async Task InfiniteRunAsync(IJob job)
+        public async Task RunJobAsync(IJob job)
         {
             while (true)
             {

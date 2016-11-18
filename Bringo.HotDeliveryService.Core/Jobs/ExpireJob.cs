@@ -20,7 +20,7 @@ namespace Bringo.HotDeliveryService.Core
         {
             var expirationTime = DateTime.Now - ExpirationInterval;
 
-            await Service.MarkAsExpired(expirationTime);
+            await Service.MarkAsExpiredAsync(expirationTime);
         }
     }
 }

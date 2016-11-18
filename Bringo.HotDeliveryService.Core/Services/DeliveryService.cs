@@ -17,14 +17,14 @@ namespace Bringo.HotDeliveryService.Core
 
         private static readonly SemaphoreSlim _mutex = new SemaphoreSlim(1);
 
-        public async Task<Delivery> GetById(int deliveryId)
+        public async Task<Delivery> GetByIdAsync(int deliveryId)
         {
-            return await Repository.GetById(deliveryId);
+            return await Repository.GetByIdAsync(deliveryId);
         }
 
-        public async Task<Delivery> Take(int deliveryId)
+        public async Task<Delivery> TakeAsync(int deliveryId)
         {
-            Delivery delivery = await Repository.GetById(deliveryId);
+            Delivery delivery = await Repository.GetByIdAsync(deliveryId);
 
             if (delivery == null) return null;
 
@@ -35,13 +35,13 @@ namespace Bringo.HotDeliveryService.Core
             try
             {
                 //double checking, sad but true
-                delivery = await Repository.GetById(deliveryId);
+                delivery = await Repository.GetByIdAsync(deliveryId);
 
                 if (delivery.IsExpired()) return delivery;
 
                 delivery.Status = DeliveryStatusEnum.Taken;
 
-                await Repository.Save(delivery);
+                await Repository.SaveAsync(delivery);
 
                 return delivery;
             }
@@ -51,17 +51,17 @@ namespace Bringo.HotDeliveryService.Core
             }
         }
 
-        public async Task<List<Delivery>> Get(Filter filter = null)
+        public async Task<List<Delivery>> GetAsync(Filter filter = null)
         {
-            return await Repository.Get(filter);
+            return await Repository.GetAsync(filter);
         }
 
-        public async Task MarkAsExpired(DateTime expirationTime)
+        public async Task MarkAsExpiredAsync(DateTime expirationTime)
         {
             await _mutex.WaitAsync();
             try
             {
-                await Repository.MarkAsExpired(expirationTime);
+                await Repository.MarkAsExpiredAsync(expirationTime);
             }
             finally
             {
@@ -74,13 +74,13 @@ namespace Bringo.HotDeliveryService.Core
         /// </summary>
         /// <param name="deliveries"></param>
         /// <returns></returns>
-        public async Task Insert(ICollection<Delivery> deliveries)
+        public async Task InsertAsync(ICollection<Delivery> deliveries)
         {
             bool newOnly = deliveries.All(d => d.Id == 0);
 
             if (!newOnly) throw new NotSupportedException("Only new entities are allowed in Insert operation");
 
-            await Repository.Save(deliveries);
+            await Repository.SaveAsync(deliveries);
         }
     }
 }

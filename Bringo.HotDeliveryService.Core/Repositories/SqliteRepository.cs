@@ -23,12 +23,12 @@ namespace Bringo.HotDeliveryService.Core
             return new SQLiteAsyncConnection(path);
         }
 
-        public async Task Save(Delivery delivery)
+        public async Task SaveAsync(Delivery delivery)
         {
-            await Save(new[] { delivery });
+            await SaveAsync(new[] { delivery });
         }
 
-        public async Task Save(ICollection<Delivery> deliveries)
+        public async Task SaveAsync(ICollection<Delivery> deliveries)
         {
             var db = CreateConnection();
 
@@ -39,7 +39,7 @@ namespace Bringo.HotDeliveryService.Core
             await db.InsertAllAsync(deliveries.Where(d => d.Id == 0));
         }
 
-        public async Task<List<Delivery>> Get(Filter filter = null)
+        public async Task<List<Delivery>> GetAsync(Filter filter = null)
         {
             var db = CreateConnection();
 
@@ -50,7 +50,7 @@ namespace Bringo.HotDeliveryService.Core
             return await query.ToListAsync();
         }
 
-        public async Task MarkAsExpired(DateTime expirationTime)
+        public async Task MarkAsExpiredAsync(DateTime expirationTime)
         {
             var db = CreateConnection();
 
@@ -60,14 +60,14 @@ namespace Bringo.HotDeliveryService.Core
                 expirationTime);
         }
 
-        public async Task<Delivery> GetById(int deliveryId)
+        public async Task<Delivery> GetByIdAsync(int deliveryId)
         {
             var db = CreateConnection();
 
             return await db.Table<Delivery>().Where(d => d.Id == deliveryId).FirstOrDefaultAsync();
         }
 
-        public async Task ClearAll()
+        public async Task ClearAllAsync()
         {
             var db = CreateConnection();
 

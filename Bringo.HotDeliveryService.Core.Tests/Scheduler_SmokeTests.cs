@@ -9,7 +9,7 @@ namespace Bringo.HotDeliveryService.Core.Tests
     public class Scheduler_SmokeTests
     {
         [Test]
-        public async Task InfiniteRunAsync_RealJobs_Runs()
+        public void InfiniteRunAsync_RealJobs_Runs()
         {
             var scheduler = DiRoot.Resolve<Scheduler>();
             var j1 = DiRoot.Resolve<CreateJob>();

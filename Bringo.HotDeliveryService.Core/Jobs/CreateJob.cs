@@ -26,7 +26,7 @@ namespace Bringo.HotDeliveryService.Core
 
             Trace.WriteLine($"Creating {countToCreate} deliveries.");
 
-            await Service.Insert(deliveries);
+            await Service.InsertAsync(deliveries);
         }
 
     }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -17,13 +19,13 @@ namespace Bringo.HotDeliveryService.Core.Tests
         {
             RepositoryType = repositoryType;
             Repository = DiRoot.Resolve(RepositoryType) as IRepository;
-            Factory = new DeliveryFactory();
+            Factory = DiRoot.Resolve<DeliveryFactory>();
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            await Repository.ClearAll();
+            await Repository.ClearAllAsync();
         }
 
         [Test]
@@ -31,9 +33,9 @@ namespace Bringo.HotDeliveryService.Core.Tests
         {
             await Add();
 
-            var fromDb = await Repository.Get();
+            var fromDb = await Repository.GetAsync();
 
-            var delivery = await Repository.GetById(fromDb.Select(d => d.Id).First());
+            var delivery = await Repository.GetByIdAsync(fromDb.Select(d => d.Id).First());
 
             Assert.IsNotNull(delivery);
         }
@@ -45,9 +47,9 @@ namespace Bringo.HotDeliveryService.Core.Tests
 
             var toDb = new[] { delivery };
 
-            await Repository.Save(toDb.ToList());
+            await Repository.SaveAsync(toDb.ToList());
 
-            var fromDb = await Repository.Get();
+            var fromDb = await Repository.GetAsync();
 
             Assert.IsTrue(fromDb.Any(d => d.Id == delivery.Id));
         }
@@ -55,14 +57,14 @@ namespace Bringo.HotDeliveryService.Core.Tests
         [Test]
         public async Task Update()
         {
-            var fromDb = await Repository.Get();
+            var fromDb = await Repository.GetAsync();
 
             var delivery = fromDb.LastOrDefault();
 
             if (delivery == null)
             {
                 await Add();
-                fromDb = await Repository.Get();
+                fromDb = await Repository.GetAsync();
                 delivery = fromDb.Last();
             }
 
@@ -70,9 +72,9 @@ namespace Bringo.HotDeliveryService.Core.Tests
 
             var toDb = new[] { delivery };
 
-            await Repository.Save(toDb.ToList());
+            await Repository.SaveAsync(toDb.ToList());
 
-            fromDb = await Repository.Get();
+            fromDb = await Repository.GetAsync();
 
             Assert.IsTrue(fromDb.First(d => d.Id == delivery.Id).Title == delivery.Title);
         }
@@ -80,7 +82,7 @@ namespace Bringo.HotDeliveryService.Core.Tests
         [Test]
         public async Task GetAll()
         {
-            var deliveries = await Repository.Get(new Filter() {Status = DeliveryStatusEnum.Taken});
+            var deliveries = await Repository.GetAsync(new Filter() {Status = DeliveryStatusEnum.Taken});
 
             Console.WriteLine(deliveries.Serialize());
         }
@@ -88,9 +90,9 @@ namespace Bringo.HotDeliveryService.Core.Tests
         [Test]
         public async Task Clear()
         {
-            await Repository.ClearAll();
+            await Repository.ClearAllAsync();
 
-            var deliveries = await Repository.Get();
+            var deliveries = await Repository.GetAsync();
 
             Assert.IsEmpty(deliveries);
         }
@@ -98,7 +100,10 @@ namespace Bringo.HotDeliveryService.Core.Tests
         [Test]
         public async Task UpdateExpired()
         {
-            await Repository.MarkAsExpired(DateTime.Now);
+            await Repository.MarkAsExpiredAsync(DateTime.Now);
         }
     }
+
+
+
 }

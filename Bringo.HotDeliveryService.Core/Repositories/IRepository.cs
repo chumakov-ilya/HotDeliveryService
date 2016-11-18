@@ -6,16 +6,16 @@ namespace Bringo.HotDeliveryService.Core
 {
     public interface IRepository
     {
-        Task ClearAll();
+        Task ClearAllAsync();
 
-        Task Save(Delivery delivery);
+        Task SaveAsync(Delivery delivery);
 
-        Task Save(ICollection<Delivery> deliveries);
+        Task SaveAsync(ICollection<Delivery> deliveries);
 
-        Task<List<Delivery>> Get(Filter filter = null);
+        Task<List<Delivery>> GetAsync(Filter filter = null);
 
-        Task MarkAsExpired(DateTime expirationTime);
+        Task MarkAsExpiredAsync(DateTime expirationTime);
 
-        Task<Delivery> GetById(int deliveryId);
+        Task<Delivery> GetByIdAsync(int deliveryId);
     }
 }
