@@ -23,5 +23,13 @@ namespace Bringo.HotDeliveryService.Core
         {
             return Status == DeliveryStatusEnum.Expired || IsExpiredByTime(DateTime.Now);
         }
+
+        /// <summary>
+        /// I prefer 'timestamp' column on database side. It'is ridiculous to make it manually.
+        /// </summary>
+        public void MarkAsModified()
+        {
+            ModificationTime = DateTime.Now;
+        }     
     }
 }

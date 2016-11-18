@@ -46,6 +46,8 @@ namespace Bringo.HotDeliveryService.Core
 
                 foreach (var delivery in deliveries)
                 {
+                    delivery.MarkAsModified();
+
                     if (delivery.Id == 0)
                     {
                         delivery.Id = list.Count > 0 ? list.Max(d => d.Id) + 1 : 1;
@@ -68,6 +70,7 @@ namespace Bringo.HotDeliveryService.Core
                 var expired = list.Where(d => d.IsExpiredByTime(expirationTime)).ToList();
 
                 expired.ForEach(d => d.Status = DeliveryStatusEnum.Expired);
+                expired.ForEach(d => d.MarkAsModified());
 
                 list.Update(expired);
             }).ConfigureAwait(false);

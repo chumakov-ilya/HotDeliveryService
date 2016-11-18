@@ -32,6 +32,8 @@ namespace Bringo.HotDeliveryService.Core
         {
             var db = CreateConnection();
 
+            foreach (var d in deliveries) d.MarkAsModified();
+
             await db.UpdateAllAsync(deliveries.Where(d => d.Id > 0));
 
             await db.InsertAllAsync(deliveries.Where(d => d.Id == 0));
@@ -53,7 +55,8 @@ namespace Bringo.HotDeliveryService.Core
             var db = CreateConnection();
 
             await db.ExecuteAsync(
-                "UPDATE Delivery SET Status = 3 WHERE Status = 1 AND CreationTime <= @expTime",
+                "UPDATE Delivery SET Status = 3, ModificationTime = @now WHERE Status = 1 AND CreationTime <= @expTime",
+                DateTime.Now,
                 expirationTime);
         }
 
