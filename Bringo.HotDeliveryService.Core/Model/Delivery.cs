@@ -10,7 +10,7 @@ namespace Bringo.HotDeliveryService.Core
         public int Id { get; set; }
         public DeliveryStatusEnum Status { get; set; }
         public string Title { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime ModificationTime { get; set; }
 
@@ -25,7 +25,7 @@ namespace Bringo.HotDeliveryService.Core
         }
 
         /// <summary>
-        /// I prefer 'timestamp' column on database side. It'is ridiculous to make it manually.
+        /// I prefer 'timestamp' column on database side. It is ridiculous to update time manually.
         /// </summary>
         public void MarkAsModified()
         {

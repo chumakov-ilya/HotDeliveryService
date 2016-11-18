@@ -233,6 +233,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Storage\Delivery.sqlite" />
+    <Content Include="Storage\Delivery.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bringo.HotDeliveryService.Core\Bringo.HotDeliveryService.Core.csproj">
