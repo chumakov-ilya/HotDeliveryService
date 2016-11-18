@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
@@ -17,7 +18,7 @@ namespace Bringo.HotDeliveryService.Web.Controllers
         public DeliveryService Service { get; set; }
 
         /// <summary>
-        /// Get all deliveries by status (Available, Expired, Taken).
+        /// Get all deliveries by status (Available, Taken, Expired).
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
@@ -31,13 +32,13 @@ namespace Bringo.HotDeliveryService.Web.Controllers
         }
 
         /// <summary>
-        /// Take a delivery by ID.
+        /// Take a delivery by deliveryId and userId.
         /// </summary>
         /// <param name="deliveryId"></param>
-        /// <param name="body"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [Route("~/api/deliveries/{deliveryId}/actions/take")]
-        public async Task<IHttpActionResult> Post([FromUri]int deliveryId, [FromBody]TakeRequestBody body)
+        public async Task<IHttpActionResult> Put([FromUri]int deliveryId, [FromUri]int userId)
         {
             Delivery delivery = await Service.TakeAsync(deliveryId);
 
