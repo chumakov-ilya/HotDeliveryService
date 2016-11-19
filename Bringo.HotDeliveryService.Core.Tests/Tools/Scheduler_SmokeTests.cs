@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Bringo.HotDeliveryService.Core.Jobs;
 using NUnit.Framework;
 
 namespace Bringo.HotDeliveryService.Core.Tests

@@ -11,6 +11,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Bringo.HotDeliveryService.Core;
+using Bringo.HotDeliveryService.Core.Contracts;
+using Bringo.HotDeliveryService.Core.Jobs;
 
 namespace Bringo.HotDeliveryService.Web
 {

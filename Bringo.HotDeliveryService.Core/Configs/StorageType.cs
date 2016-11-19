@@ -1,4 +1,4 @@
-﻿namespace Bringo.HotDeliveryService.Core
+﻿namespace Bringo.HotDeliveryService.Core.Configs
 {
     public enum StorageType
     {

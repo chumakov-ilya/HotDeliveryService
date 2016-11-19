@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Bringo.HotDeliveryService.Core.Contracts;
+using Bringo.HotDeliveryService.Core.Model;
+using Bringo.HotDeliveryService.Core.Repositories;
+using Bringo.HotDeliveryService.Core.Services;
+using Bringo.HotDeliveryService.Core.Tools;
 using NUnit.Framework;
 
 namespace Bringo.HotDeliveryService.Core.Tests

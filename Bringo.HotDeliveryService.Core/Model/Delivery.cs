@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using SQLite;
 
-namespace Bringo.HotDeliveryService.Core
+namespace Bringo.HotDeliveryService.Core.Model
 {
     public class Delivery
     {

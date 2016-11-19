@@ -1,8 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Bringo.HotDeliveryService.Core.Contracts;
+using Bringo.HotDeliveryService.Core.Services;
 
-namespace Bringo.HotDeliveryService.Core
+namespace Bringo.HotDeliveryService.Core.Jobs
 {
     public class ExpireJob : IJob
     {

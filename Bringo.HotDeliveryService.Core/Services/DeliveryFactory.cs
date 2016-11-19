@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bringo.HotDeliveryService.Core.Model;
 
-namespace Bringo.HotDeliveryService.Core
+namespace Bringo.HotDeliveryService.Core.Services
 {
     public class DeliveryFactory
     {

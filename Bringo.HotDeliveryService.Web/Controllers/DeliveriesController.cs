@@ -8,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
+using Bringo.HotDeliveryService.Core.Model;
+using Bringo.HotDeliveryService.Core.Services;
 using Ninject;
 
 namespace Bringo.HotDeliveryService.Web.Controllers

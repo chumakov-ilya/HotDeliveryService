@@ -1,6 +1,7 @@
 ﻿using System;
+using Bringo.HotDeliveryService.Core.Model;
 
-namespace Bringo.HotDeliveryService.Core
+namespace Bringo.HotDeliveryService.Core.Contracts
 {
     public interface IExpirationPolicy
     {

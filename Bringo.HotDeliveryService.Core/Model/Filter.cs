@@ -1,4 +1,4 @@
-﻿namespace Bringo.HotDeliveryService.Core
+﻿namespace Bringo.HotDeliveryService.Core.Model
 {
     public class Filter
     {

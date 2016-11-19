@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Biggy.Core;
 using Biggy.Data.Json;
+using Bringo.HotDeliveryService.Core.Contracts;
+using Bringo.HotDeliveryService.Core.Model;
 
-namespace Bringo.HotDeliveryService.Core
+namespace Bringo.HotDeliveryService.Core.Repositories
 {
     public class JsonRepository : IRepository
     {

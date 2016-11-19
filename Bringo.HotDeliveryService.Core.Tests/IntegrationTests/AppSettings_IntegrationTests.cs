@@ -1,4 +1,5 @@
 ﻿using System;
+using Bringo.HotDeliveryService.Core.Contracts;
 using NUnit.Framework;
 
 namespace Bringo.HotDeliveryService.Core.Tests

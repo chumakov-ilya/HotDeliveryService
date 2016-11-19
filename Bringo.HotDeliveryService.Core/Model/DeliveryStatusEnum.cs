@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Bringo.HotDeliveryService.Core
+﻿namespace Bringo.HotDeliveryService.Core.Model
 {
     public enum DeliveryStatusEnum
     {

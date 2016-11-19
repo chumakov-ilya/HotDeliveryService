@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Bringo.HotDeliveryService.Core.Contracts;
+using Bringo.HotDeliveryService.Core.Model;
 
-namespace Bringo.HotDeliveryService.Core
+namespace Bringo.HotDeliveryService.Core.Services
 {
     public class DeliveryService
     {

@@ -1,4 +1,6 @@
-﻿namespace Bringo.HotDeliveryService.Core
+﻿using Bringo.HotDeliveryService.Core.Configs;
+
+namespace Bringo.HotDeliveryService.Core.Contracts
 {
     public interface IAppSettings
     {

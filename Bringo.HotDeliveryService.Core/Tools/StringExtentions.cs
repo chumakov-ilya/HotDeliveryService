@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Bringo.HotDeliveryService.Core
+namespace Bringo.HotDeliveryService.Core.Tools
 {
     public static class StringExtentions
     {

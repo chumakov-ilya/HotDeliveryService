@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Bringo.HotDeliveryService.Core.Contracts;
+using Bringo.HotDeliveryService.Core.Model;
+using Bringo.HotDeliveryService.Core.Services;
 using Moq;
 using NUnit.Framework;
 

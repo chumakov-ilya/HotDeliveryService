@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using Bringo.HotDeliveryService.Core.Contracts;
 using Westwind.Utilities.Configuration;
 
-namespace Bringo.HotDeliveryService.Core
+namespace Bringo.HotDeliveryService.Core.Configs
 {
     public class AppSettings : AppConfiguration, IAppSettings
     {

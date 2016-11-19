@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
+using Bringo.HotDeliveryService.Core.Contracts;
 
-namespace Bringo.HotDeliveryService.Core
+namespace Bringo.HotDeliveryService.Core.Jobs
 {
     public class TestJob : IJob
     {

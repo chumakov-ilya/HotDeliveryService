@@ -3,8 +3,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Bringo.HotDeliveryService.Core.Contracts;
 
-namespace Bringo.HotDeliveryService.Core
+namespace Bringo.HotDeliveryService.Core.Jobs
 {
     public class Scheduler
     {

@@ -1,4 +1,8 @@
 ﻿using System;
+using Bringo.HotDeliveryService.Core.Configs;
+using Bringo.HotDeliveryService.Core.Contracts;
+using Bringo.HotDeliveryService.Core.Repositories;
+using Bringo.HotDeliveryService.Core.Services;
 using Ninject;
 using Ninject.Syntax;
 using Ninject.Web.Common;

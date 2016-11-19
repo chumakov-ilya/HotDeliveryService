@@ -497,7 +497,7 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="M:Bringo.HotDeliveryService.Web.Controllers.DeliveriesController.Get(Bringo.HotDeliveryService.Core.Filter)">
+        <member name="M:Bringo.HotDeliveryService.Web.Controllers.DeliveriesController.Get(Bringo.HotDeliveryService.Core.Model.Filter)">
             <summary>
             Get all deliveries by status (Available, Taken, Expired).
             </summary>
