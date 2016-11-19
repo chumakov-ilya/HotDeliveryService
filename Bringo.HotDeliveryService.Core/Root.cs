@@ -32,8 +32,8 @@ namespace Bringo.HotDeliveryService.Core
 
             BindToSelf<DeliveryFactory>();
             BindToSelf<DeliveryService>();
-            BindToSelf<ExpirationPolicy>();
-            BindToSelf<RandomDeliveryPolicy>();
+            Bind<IExpirationPolicy, ExpirationPolicy>();
+            Bind<IDeliveryPolicy, RandomDeliveryPolicy>();
         }
 
         internal static IBindingNamedWithOrOnSyntax<TFrom> BindToSelf<TFrom>()

@@ -2,7 +2,7 @@ using System;
 
 namespace Bringo.HotDeliveryService.Core
 {
-    public class RandomDeliveryPolicy
+    public class RandomDeliveryPolicy : IDeliveryPolicy
     {
         public IAppSettings Settings { get; set; }
 

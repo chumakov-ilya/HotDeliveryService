@@ -16,6 +16,9 @@ namespace Bringo.HotDeliveryService.Core
 
         public bool ShouldBeExpired(DateTime threshold)
         {
+            if (UserId != null && Status != DeliveryStatusEnum.Taken)
+                throw new NotSupportedException($"Delivery #{Id} is broken.");
+
             return Status == DeliveryStatusEnum.Available && CreationTime < threshold;
         }
 

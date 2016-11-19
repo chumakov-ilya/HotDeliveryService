@@ -8,11 +8,11 @@ namespace Bringo.HotDeliveryService.Core
 {
     public class Scheduler
     {
-        public RandomDeliveryPolicy Policy { get; set; }
+        public IDeliveryPolicy Policy { get; set; }
 
         public CancellationToken CancellationToken { get; set; }
 
-        public Scheduler(RandomDeliveryPolicy policy)
+        public Scheduler(IDeliveryPolicy policy)
         {
             Policy = policy;
         }

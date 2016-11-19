@@ -9,9 +9,9 @@ namespace Bringo.HotDeliveryService.Core
     public class DeliveryService
     {
         public IRepository Repository { get; set; }
-        public ExpirationPolicy ExpirationPolicy { get; set; }
+        public IExpirationPolicy ExpirationPolicy { get; set; }
 
-        public DeliveryService(IRepository repository, ExpirationPolicy expirationPolicy)
+        public DeliveryService(IRepository repository, IExpirationPolicy expirationPolicy)
         {
             Repository = repository;
             ExpirationPolicy = expirationPolicy;
@@ -30,7 +30,7 @@ namespace Bringo.HotDeliveryService.Core
 
             if (delivery == null) return null;
 
-            if (ExpirationPolicy.IsExpired(delivery, DateTime.Now)) return delivery;
+            if (TakeIsDenied(delivery)) return delivery;
 
             //locking ExpireJob
             await _mutex.WaitAsync();
@@ -39,7 +39,7 @@ namespace Bringo.HotDeliveryService.Core
                 //double checking, sad but true
                 delivery = await Repository.GetByIdAsync(deliveryId);
 
-                if (ExpirationPolicy.IsExpired(delivery, DateTime.Now)) return delivery;
+                if (TakeIsDenied(delivery)) return delivery;
 
                 delivery.Status = DeliveryStatusEnum.Taken;
                 delivery.UserId = userId;
@@ -52,6 +52,12 @@ namespace Bringo.HotDeliveryService.Core
             {
                 _mutex.Release();
             }
+        }
+
+        private bool TakeIsDenied(Delivery delivery)
+        {
+            return delivery.Status == DeliveryStatusEnum.Taken ||
+                   ExpirationPolicy.IsExpired(delivery, DateTime.Now);
         }
 
         public async Task<List<Delivery>> GetAsync(Filter filter = null)

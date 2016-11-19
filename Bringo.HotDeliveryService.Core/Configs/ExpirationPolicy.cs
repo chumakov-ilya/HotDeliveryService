@@ -2,7 +2,7 @@
 
 namespace Bringo.HotDeliveryService.Core
 {
-    public class ExpirationPolicy
+    public class ExpirationPolicy : IExpirationPolicy
     {
         public TimeSpan DeliveryLifetime { get; set; }
 
