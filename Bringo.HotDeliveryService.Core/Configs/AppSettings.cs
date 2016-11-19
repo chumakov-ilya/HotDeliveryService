@@ -12,7 +12,7 @@ namespace Bringo.HotDeliveryService.Core
         public int DeliveryCountMax { get; set; }
         public int TaskIntervalMin { get; set; }
         public int TaskIntervalMax { get; set; }
-        public int ExpirationTime { get; set; }
+        public int DeliveryLifetime { get; set; }
 
         public StorageType StorageType { get; set; }
 

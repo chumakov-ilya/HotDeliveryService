@@ -38,11 +38,11 @@ namespace Bringo.HotDeliveryService.Web.Controllers
         [Route("~/api/Deliveries/{deliveryId}/actions/take")]
         public async Task<IHttpActionResult> Put([FromUri]int deliveryId, [FromUri]int userId)
         {
-            Delivery delivery = await Service.TakeAsync(deliveryId);
+            Delivery delivery = await Service.TakeAsync(deliveryId, userId);
 
             if (delivery == null) return NotFound(deliveryId);
 
-            if (delivery.IsExpired()) return IsExpired(deliveryId);
+            if (delivery.Status == DeliveryStatusEnum.Expired) return IsExpired(deliveryId);
 
             return Ok(delivery);
         }

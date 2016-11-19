@@ -9,10 +9,12 @@ namespace Bringo.HotDeliveryService.Core
     public class DeliveryService
     {
         public IRepository Repository { get; set; }
+        public ExpirationPolicy ExpirationPolicy { get; set; }
 
-        public DeliveryService(IRepository repository)
+        public DeliveryService(IRepository repository, ExpirationPolicy expirationPolicy)
         {
             Repository = repository;
+            ExpirationPolicy = expirationPolicy;
         }
 
         private static readonly SemaphoreSlim _mutex = new SemaphoreSlim(1);
@@ -22,13 +24,13 @@ namespace Bringo.HotDeliveryService.Core
             return await Repository.GetByIdAsync(deliveryId);
         }
 
-        public async Task<Delivery> TakeAsync(int deliveryId)
+        public async Task<Delivery> TakeAsync(int deliveryId, int userId)
         {
             Delivery delivery = await Repository.GetByIdAsync(deliveryId);
 
             if (delivery == null) return null;
 
-            if (delivery.IsExpired()) return delivery;
+            if (ExpirationPolicy.IsExpired(delivery, DateTime.Now)) return delivery;
 
             //locking ExpireJob
             await _mutex.WaitAsync();
@@ -37,9 +39,10 @@ namespace Bringo.HotDeliveryService.Core
                 //double checking, sad but true
                 delivery = await Repository.GetByIdAsync(deliveryId);
 
-                if (delivery.IsExpired()) return delivery;
+                if (ExpirationPolicy.IsExpired(delivery, DateTime.Now)) return delivery;
 
                 delivery.Status = DeliveryStatusEnum.Taken;
+                delivery.UserId = userId;
 
                 await Repository.SaveAsync(delivery);
 
@@ -56,11 +59,13 @@ namespace Bringo.HotDeliveryService.Core
             return await Repository.GetAsync(filter);
         }
 
-        public async Task MarkAsExpiredAsync(DateTime expirationTime)
+        public async Task MarkAsExpiredAsync()
         {
             await _mutex.WaitAsync();
             try
             {
+                DateTime expirationTime = ExpirationPolicy.GetExpirationTime(DateTime.Now);
+
                 await Repository.MarkAsExpiredAsync(expirationTime);
             }
             finally

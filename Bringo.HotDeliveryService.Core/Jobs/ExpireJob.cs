@@ -6,21 +6,16 @@ namespace Bringo.HotDeliveryService.Core
 {
     public class ExpireJob : IJob
     {
-        public TimeSpan ExpirationInterval { get; set; }
-
         public DeliveryService Service { get; set; }
 
-        public ExpireJob(DeliveryService service, IAppSettings settings)
+        public ExpireJob(DeliveryService service)
         {
             Service = service;
-            ExpirationInterval = TimeSpan.FromSeconds(settings.ExpirationTime);
         }
 
         public async Task RunAsync()
         {
-            var expirationTime = DateTime.Now - ExpirationInterval;
-
-            await Service.MarkAsExpiredAsync(expirationTime);
+            await Service.MarkAsExpiredAsync();
         }
     }
 }

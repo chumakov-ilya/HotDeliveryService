@@ -67,7 +67,7 @@ namespace Bringo.HotDeliveryService.Core
             {
                 var list = GetList();
 
-                var expired = list.Where(d => d.IsExpiredByTime(expirationTime)).ToList();
+                var expired = list.Where(d => d.ShouldBeExpired(expirationTime)).ToList();
 
                 expired.ForEach(d => d.Status = DeliveryStatusEnum.Expired);
                 expired.ForEach(d => d.MarkAsModified());

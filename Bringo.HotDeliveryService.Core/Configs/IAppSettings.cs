@@ -4,7 +4,7 @@
     {
         int DeliveryCountMax { get; set; }
         int DeliveryCountMin { get; set; }
-        int ExpirationTime { get; set; }
+        int DeliveryLifetime { get; set; }
         int TaskIntervalMax { get; set; }
         int TaskIntervalMin { get; set; }
 
