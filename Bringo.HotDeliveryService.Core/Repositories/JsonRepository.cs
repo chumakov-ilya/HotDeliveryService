@@ -25,62 +25,65 @@ namespace Bringo.HotDeliveryService.Core.Repositories
             return new BiggyList<Delivery>(store);
         }
 
-        public async Task ClearAllAsync()
+        public Task ClearAllAsync()
         {
-            await Task.Run(() => GetList().Clear()).ConfigureAwait(false);
+            GetList().Clear();
+            return Task.CompletedTask;
         }
 
-        public async Task SaveAsync(Delivery delivery)
+        public Task SaveAsync(Delivery delivery)
         {
-            await SaveAsync(new [] {delivery});
+            return SaveAsync(new [] {delivery});
         }
 
-        public async Task<List<Delivery>> GetAsync(Filter filter = null)
+        public Task<List<Delivery>> GetAsync(Filter filter = null)
         {
-            return await Task.Run(() => GetList().Where(d => filter == null || d.Status == filter.Status).ToList()).ConfigureAwait(false);
+            var deliveries = GetList().Where(d => filter == null || d.Status == filter.Status).ToList();
+
+            return Task.FromResult(deliveries);
         }
 
-        public async Task SaveAsync(ICollection<Delivery> deliveries)
+        public Task SaveAsync(ICollection<Delivery> deliveries)
         {
-            await Task.Run(() =>
+            var list = GetList();
+
+            foreach (var delivery in deliveries)
             {
-                var list = GetList();
+                delivery.MarkAsModified();
 
-                foreach (var delivery in deliveries)
+                if (delivery.Id == 0)
                 {
-                    delivery.MarkAsModified();
-
-                    if (delivery.Id == 0)
-                    {
-                        delivery.Id = list.Count > 0 ? list.Max(d => d.Id) + 1 : 1;
-                        list.Add(delivery);
-                    }
-                    else
-                    {
-                        list.Update(delivery);
-                    }
+                    delivery.Id = list.Count > 0 ? list.Max(d => d.Id) + 1 : 1;
+                    list.Add(delivery);
                 }
-            }).ConfigureAwait(false);
+                else
+                {
+                    list.Update(delivery);
+                }
+            }
+
+            return Task.CompletedTask;
         }
 
-        public async Task MarkAsExpiredAsync(DateTime expirationTime)
+        public Task MarkAsExpiredAsync(DateTime expirationTime)
         {
-            await Task.Run(() =>
-            {
-                var list = GetList();
+            var list = GetList();
 
-                var expired = list.Where(d => d.ShouldBeExpired(expirationTime)).ToList();
+            var expired = list.Where(d => d.ShouldBeExpired(expirationTime)).ToList();
 
-                expired.ForEach(d => d.Status = DeliveryStatusEnum.Expired);
-                expired.ForEach(d => d.MarkAsModified());
+            expired.ForEach(d => d.Status = DeliveryStatusEnum.Expired);
+            expired.ForEach(d => d.MarkAsModified());
 
-                list.Update(expired);
-            }).ConfigureAwait(false);
+            list.Update(expired);
+
+            return Task.CompletedTask;
         }
 
-        public async Task<Delivery> GetByIdAsync(int deliveryId)
+        public Task<Delivery> GetByIdAsync(int deliveryId)
         {
-            return await Task.Run(() => GetList().FirstOrDefault(d => d.Id == deliveryId)).ConfigureAwait(false);
+            Delivery delivery = GetList().FirstOrDefault(d => d.Id == deliveryId);
+
+            return Task.FromResult(delivery);
         }
     }
 }
