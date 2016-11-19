@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -18,8 +16,8 @@ namespace Bringo.HotDeliveryService.Core.Tests
         public Repository_IntegrationTests(Type repositoryType)
         {
             RepositoryType = repositoryType;
-            Repository = DiRoot.Resolve(RepositoryType) as IRepository;
-            Factory = DiRoot.Resolve<DeliveryFactory>();
+            Repository = Root.Resolve(RepositoryType) as IRepository;
+            Factory = Root.Resolve<DeliveryFactory>();
         }
 
         [SetUp]
@@ -82,7 +80,7 @@ namespace Bringo.HotDeliveryService.Core.Tests
         [Test]
         public async Task GetAll()
         {
-            var deliveries = await Repository.GetAsync(new Filter() {Status = DeliveryStatusEnum.Taken});
+            var deliveries = await Repository.GetAsync(new Filter { Status = DeliveryStatusEnum.Taken });
 
             Console.WriteLine(deliveries.Serialize());
         }
@@ -98,7 +96,7 @@ namespace Bringo.HotDeliveryService.Core.Tests
         }
 
         [Test]
-        public async Task UpdateExpired()
+        public async Task MarkAsExpired()
         {
             await Repository.MarkAsExpiredAsync(DateTime.Now);
         }

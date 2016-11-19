@@ -97,7 +97,7 @@
   <ItemGroup>
     <Compile Include="Configs\IAppSettings.cs" />
     <Compile Include="Configs\StorageType.cs" />
-    <Compile Include="DiRoot.cs" />
+    <Compile Include="Root.cs" />
     <Compile Include="Configs\RandomDeliveryPolicy.cs" />
     <Compile Include="Jobs\CreateJob.cs" />
     <Compile Include="Services\DeliveryFactory.cs" />

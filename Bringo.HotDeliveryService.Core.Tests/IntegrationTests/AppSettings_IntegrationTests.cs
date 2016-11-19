@@ -8,7 +8,7 @@ namespace Bringo.HotDeliveryService.Core.Tests
         [Test]
         public void Settings_ReadFromFile_ReturnsAnyValue()
         {
-            var actual = DiRoot.Resolve<IAppSettings>();
+            var actual = Root.Resolve<IAppSettings>();
 
             int value = (int)actual.StorageType;
 

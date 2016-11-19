@@ -11,9 +11,9 @@ namespace Bringo.HotDeliveryService.Core.Tests
         [Test]
         public void InfiniteRunAsync_RealJobs_Runs()
         {
-            var scheduler = DiRoot.Resolve<Scheduler>();
-            var j1 = DiRoot.Resolve<CreateJob>();
-            var j2 = DiRoot.Resolve<ExpireJob>();
+            var scheduler = Root.Resolve<Scheduler>();
+            var j1 = Root.Resolve<CreateJob>();
+            var j2 = Root.Resolve<ExpireJob>();
             scheduler.Run(new CancellationToken(false), j1, j2);
         }
     }

@@ -50,7 +50,7 @@ namespace Bringo.HotDeliveryService.Web.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
                 GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
 
-                DiRoot.Register(kernel);
+                Root.Register(kernel);
 
                 return kernel;
             }

@@ -99,12 +99,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Scheduler_SmokeTests.cs" />
-    <Compile Include="Repository_IntegrationTests.cs" />
-    <Compile Include="Gen.cs" />
-    <Compile Include="AppSettings_IntegrationTests.cs" />
+    <Compile Include="Tools\Scheduler_SmokeTests.cs" />
+    <Compile Include="IntegrationTests\Repository_IntegrationTests.cs" />
+    <Compile Include="Tools\Gen.cs" />
+    <Compile Include="IntegrationTests\AppSettings_IntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sqlite_SmokeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bringo.HotDeliveryService.Core\Bringo.HotDeliveryService.Core.csproj">

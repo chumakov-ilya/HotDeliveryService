@@ -38,14 +38,14 @@ namespace Bringo.HotDeliveryService.Web
         {
             Trace.WriteLine(MethodBase.GetCurrentMethod().Name);
 
-            var settings = DiRoot.Resolve<IAppSettings>();
+            var settings = Root.Resolve<IAppSettings>();
             Trace.WriteLine("StoragePath: " + settings.GetStoragePath());
 
             _cts = new CancellationTokenSource();
 
-            var scheduler = DiRoot.Resolve<Scheduler>();
-            var createJob = DiRoot.Resolve<CreateJob>();
-            var expireJob = DiRoot.Resolve<ExpireJob>();
+            var scheduler = Root.Resolve<Scheduler>();
+            var createJob = Root.Resolve<CreateJob>();
+            var expireJob = Root.Resolve<ExpireJob>();
 
             Task.Run(() => scheduler.Run(_cts.Token, createJob, expireJob));
         }

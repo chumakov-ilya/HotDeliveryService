@@ -5,9 +5,9 @@ using Ninject.Web.Common;
 
 namespace Bringo.HotDeliveryService.Core
 {
-    public static class DiRoot
+    public static class Root
     {
-        static DiRoot()
+        static Root()
         {
             Register();
         }
