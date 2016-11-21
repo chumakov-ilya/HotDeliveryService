@@ -9,6 +9,8 @@ using Bringo.HotDeliveryService.Core.Model;
 
 namespace Bringo.HotDeliveryService.Core.Repositories
 {
+    //I used Biggy https://github.com/xivSolutions/biggy to write to JSON file and that tool doesn't implement async API. 
+    //So I decided to keep task-based IRepository and implement it carefully with Task.CompletedTask/Task.FromResult calls (more interesting).
     public class JsonRepository : IRepository
     {
         public IAppSettings Settings { get; set; }
